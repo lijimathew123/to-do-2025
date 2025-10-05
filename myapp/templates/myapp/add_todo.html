@@ -2,14 +2,82 @@
 <html>
 <head>
     <title>Add Todo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            align-items: center;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            width: 100%;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 0.95em;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Add Todo</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" name="title" placeholder="Task title">
-        <button type="submit">Save</button>
-    </form>
-    <a href="{% url 'index' %}">Back to List</a>
+    <div class="container">
+        <h1>Add Todo</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Task title">
+            <button type="submit">Save</button>
+        </form>
+        <a href="{% url 'index' %}">← Back to List</a>
+    </div>
 </body>
 </html>

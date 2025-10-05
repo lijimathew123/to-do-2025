@@ -26,3 +26,23 @@ def delete_todo(request, todo_id):
     todo = Todo.objects.get(id=todo_id)
     todo.delete()
     return redirect('index')
+
+
+
+# core/views.py
+import subprocess
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def deploy(request):
+    if request.method == "POST":
+        try:
+            subprocess.run(["git", "pull"], cwd="/home/ubuntu/to-do-2025")
+            subprocess.run(["/home/ubuntu/to-do-2025/venv/bin/python3", "manage.py", "migrate"], cwd="/home/ubuntu/to-do-2025")
+            subprocess.run(["/home/ubuntu/to-do-2025/venv/bin/python3", "manage.py", "collectstatic", "--noinput"], cwd="/home/ubuntu/to-do-2025")
+            subprocess.run(["sudo", "systemctl", "restart", "gunicorn"])  # Optional
+            return HttpResponse("Deployment successful.", status=200)
+        except Exception as e:
+            return HttpResponse(f"Deployment failed: {str(e)}", status=500)
+    return HttpResponse("Only POST method is allowed.", status=405)
