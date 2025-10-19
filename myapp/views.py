@@ -13,6 +13,7 @@ def add_todo(request):
         title = request.POST.get('title')
         if title:
             Todo.objects.create(title=title)
+            print("new item added to the list")
         return redirect('index')
     return render(request, 'myapp/add_todo.html')
 
